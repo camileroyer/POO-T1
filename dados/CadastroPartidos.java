@@ -6,10 +6,12 @@ public class CadastroPartidos {
      ArrayList<Partido> partidos = new ArrayList<>();
 
      public void cadastra(){
-        for (Partido partidos : p){
-        if(){
-
+        for (Partido p : partidos) {
+            if (p.getCodigo() == partido.getCodigo()) {
+                System.out.println("ERRO - partido repetido");
+                return;
+            }
         }
-        else { System.out.println("ERRO -- partido repetido");}
-     } }
+        partidos.add(partido);
+    }
 }
