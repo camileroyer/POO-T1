@@ -7,8 +7,7 @@ import java.io.PrintStream;
 import java.nio.charset.Charset;
 import java.util.Locale;
 import java.util.Scanner;
-import dados.CadastroLocalidades;
-import dados.CadastroVotos;
+import dados.*;
 
 public class AppACMEPolling{
     private Scanner entrada;
@@ -16,6 +15,7 @@ public class AppACMEPolling{
     private final String nomeArquivoEntrada = "pollingin.txt";  // entrada de dados
     private final String nomeArquivoSaida = "pollingout.txt";  // saida de dados
     private CadastroPartidos cadastroPartido;
+    private CadastroPresidente cadastroPresidente;
     private CadastroLocalidades cadastroLocalidade;
     private CadastroVotos cadastroVoto;
 
@@ -44,17 +44,27 @@ public class AppACMEPolling{
         do {
             System.out.println("Cadastro de Localidades");
             System.out.println("Diga o CEP: ");
-            int cep = entrada.nextInt();
-            entrada.nextLine();
+            String cep = entrada.nextLine();
             System.out.println("Diga o nome: ");
             String nomeLocalidade = entrada.nextLine();
             System.out.println("Quantidade de eleitores: ");
             long qtdEleitores = entrada.nextLong();
             Localidade localidade = new Localidade(cep, nomeLocalidade, qtdEleitores);
             cadastroLocalidade.cadastra(localidade);
-        } while (cep != -1);
+        } while (cep != "-1");
 
-        //cadastra candidato presidencia
+        do { 
+            System.out.println("Cadastro de Presidente");
+            System.out.println("Diga a idade: ");
+            int idade = entrada.nextInt();
+            entrada.nextLine();
+            System.out.println("Diga o nome: ");
+            String nomePresidente = entrada.nextLine();
+            System.out.println("Diga o patrimonio: ");
+            double patrimonio = entrada.nextDouble();
+            Presidente presidente = new Presidente(idade, nomePresidente, patrimonio);
+            cadastroPresidente.cadastra(presidente);
+        } while (idade != -1);
 
         //cadastra candidato governador
 
