@@ -3,8 +3,8 @@ package dados;
 public class Governador extends Candidato {
     private String escolaridade;
 
-    public Governador(int numero, String nome, String escolaridade){
-        super(numero, nome);
+    public Governador(int numero, String nome, Partido partido, Localidade localidade, String escolaridade){
+        super(numero, nome, partido, localidade);
         this.escolaridade = escolaridade;
     }
 

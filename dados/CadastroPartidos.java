@@ -14,4 +14,6 @@ public class CadastroPartidos {
         }
         partidos.add(partido);
     }
+
+    public ArrayList<Partido> getPartidos() { return partidos; }
 }

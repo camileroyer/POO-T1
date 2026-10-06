@@ -7,11 +7,15 @@ public class CadastroLocalidades {
 
     public void cadastra(Localidade localidade){
         for (Localidade l : localidades) {
-            if (l.getCep() == localidade.getCep()) {
+            if (l.getCep().equals(localidade.getCep())) {
                 System.out.println("ERRO - localidade repetida");
                 return;
             }
         }
         localidades.add(localidade);
     }
+
+    public ArrayList<Localidade> getLocalidades() {
+    return localidades;
+}
     }
