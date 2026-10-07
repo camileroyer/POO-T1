@@ -16,7 +16,8 @@ public class CadastroLocalidades {
 
     public Localidade busca(String cep) {
         for (Localidade l : localidades) {
-            if (l.getCep().equals(cep)) return l;
+            if (l.getCep().equals(cep)) { 
+                return l; }
         }
         return null;
     }

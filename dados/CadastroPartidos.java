@@ -16,7 +16,8 @@ public class CadastroPartidos {
 
     public Partido busca(int codigo) {
         for (Partido p : partidos) {
-            if (p.getCodigo() == codigo) return p;
+            if (p.getCodigo() == codigo) { 
+                return p; }
         }
         return null;
     }
