@@ -8,16 +8,11 @@ public class Presidente extends Candidato {
         this.patrimonio = patrimonio;
     }
 
-    public double getPatrimonio() {
-        return patrimonio;
-    }
+    public double getPatrimonio() { return patrimonio; }
+    public void setPatrimonio(double patrimonio) { this.patrimonio = patrimonio; }
 
-    public void setPatrimonio(double patrimonio) {
-        this.patrimonio = patrimonio;
-    }
-    
-     @Override
-    public void getDescricao(){
-        //return "Numero: " + getNumero()  + "Nome: " + getNome() + "Escolaridade: " +escolaridade;
+    @Override
+    public String getDescricao(){
+        return getNumero() + " - " + getNome() + " - " + getPartido().getNome() + " - " + patrimonio;
     }
 }

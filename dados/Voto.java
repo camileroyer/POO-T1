@@ -22,4 +22,8 @@ public class Voto {
     public void setHora(int hora) { this.hora = hora; }
     public void setCandidato(Candidato candidato) { this.candidato = candidato; }
     public void setLocalidade(Localidade localidade) { this.localidade = localidade; }
+
+    public String getDescricao() {
+        return id + " - " + hora + " - " + candidato.getNome() + " - " + localidade.getNome();
+    }
 }

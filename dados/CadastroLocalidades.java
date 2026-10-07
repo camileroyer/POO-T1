@@ -8,14 +8,18 @@ public class CadastroLocalidades {
     public void cadastra(Localidade localidade){
         for (Localidade l : localidades) {
             if (l.getCep().equals(localidade.getCep())) {
-                System.out.println("ERRO - localidade repetida");
                 return;
             }
         }
         localidades.add(localidade);
     }
 
-    public ArrayList<Localidade> getLocalidades() {
-    return localidades;
-}
+    public Localidade busca(String cep) {
+        for (Localidade l : localidades) {
+            if (l.getCep().equals(cep)) return l;
+        }
+        return null;
     }
+
+    public ArrayList<Localidade> getLocalidades() { return localidades; }
+}

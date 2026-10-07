@@ -4,57 +4,37 @@ import java.util.ArrayList;
 
 public class CadastroVotos {
     ArrayList<Voto> votos = new ArrayList<>();
-    private CadastroCandidato cadastroCandidato;
-    private CadastroLocalidades cadastroLocalidade;
 
-    public CadastroVotos(CadastroCandidato cadastroCandidato, CadastroLocalidades cadastroLocalidade) {
-        this.cadastroCandidato = cadastroCandidato;
-        this.cadastroLocalidade = cadastroLocalidade;
+    public void cadastra(Voto voto){ votos.add(voto); }
+
+    public boolean existeId(int id) {
+        for (Voto v : votos) if (v.getId() == id) return true;
+        return false;
     }
 
-    public void cadastra(Voto voto){
-         for (Voto v : votos) {
-            if (v.getId() == voto.getId()) {
-                System.out.println("ERRO - id repetido");
-                return;
-            }
+    public int contaVotos(Candidato candidato) {
+        int quantidade = 0;
+        for (Voto v : votos) {
+            if (v.getCandidato().getNumero() == candidato.getNumero()) quantidade++;
         }
-        if (voto.getHora() < 17 && voto.getHora() > 7) {
-            System.out.println("ERRO - hora incorreta");
-            return;
-        }
-        boolean candidatoValido = false;
-        for (Presidente p : cadastroCandidato.getPresidentes()) {
-            if (p.getNome().equals(voto.getCandidato())) {
-                candidatoValido = true;
-                break;
-            }
-        }
-        for (Governador g : cadastroCandidato.getGovernadores()) {
-            if (g.getNome().equals(voto.getCandidato())) {
-                candidatoValido = true;
-                break;
-            }
-        }
-        if (!candidatoValido) {
-            System.out.println("ERRO - candidato incorreto");
-            return;
-        }
-        boolean localidadeValida = false;
-        for (Localidade l : cadastroLocalidade.getLocalidades()) {
-            if (l.getCep().equals(voto.getLocalidade())) {
-                localidadeValida = true;
-                break;
-            }
-        }
-        if (!localidadeValida) {
-            System.out.println("ERRO - localidade incorreta");
-            return;
-        }
-        votos.add(voto);
+        return quantidade;
     }
 
-    public ArrayList<Voto> getVotos() {
-        return votos;
+    public int ultimoVoto(Candidato candidato) {
+        int ultimo = -1;
+        for (Voto v : votos) {
+            if (v.getCandidato().getNumero() == candidato.getNumero() && v.getHora() > ultimo) ultimo = v.getHora();
+        }
+        return ultimo;
     }
+
+    public int contaVotos(Partido partido) {
+        int quantidade = 0;
+        for (Voto v : votos) {
+            if (v.getCandidato().getPartido().getCodigo() == partido.getCodigo()) quantidade++;
+        }
+        return quantidade;
+    }
+
+    public ArrayList<Voto> getVotos() { return votos; }
 }

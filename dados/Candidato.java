@@ -20,6 +20,6 @@ public abstract class Candidato {
     public void setNome(String nome) { this.nome = nome; }
     public void setPartido(Partido partido) { this.partido = partido; }
     public void setLocalidade(Localidade localidade) { this.localidade = localidade; }
-    
-    public abstract void getDescricao();
+
+    public abstract String getDescricao();
 }

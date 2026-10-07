@@ -8,16 +8,11 @@ public class Governador extends Candidato {
         this.escolaridade = escolaridade;
     }
 
-    public String getEscolaridade() {
-        return escolaridade;
-    }
-
-    public void setEscolaridade(String escolaridade) {
-        this.escolaridade = escolaridade;
-    }
+    public String getEscolaridade() { return escolaridade; }
+    public void setEscolaridade(String escolaridade) { this.escolaridade = escolaridade; }
 
     @Override
-    public void getDescricao(){
-        //return "Numero: " + getNumero()  + "Nome: " + getNome() + "Escolaridade: " +escolaridade;
+    public String getDescricao(){
+        return getNumero() + " - " + getNome() + " - " + getPartido().getNome() + " - " + getLocalidade().getNome() + " - " + escolaridade;
     }
 }
