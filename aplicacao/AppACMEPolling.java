@@ -29,7 +29,6 @@ public class AppACMEPolling{
     }
 
     public void executa() {
-        //vou ter que tirar esses sysout
 
         // cadastrao partidos
         while (true) {
@@ -53,7 +52,7 @@ public class AppACMEPolling{
             String nomeLocalidade = entrada.nextLine();
             long qtdEleitores = entrada.nextLong();
             entrada.nextLine();
-            String tipoAux = entrada.nextLine(); //tapa buraco, tem que pensar em algo melhor
+            String tipoAux = entrada.nextLine();
             TipoLocalidade tipo = null;
             if (tipoAux.equals("NACIONAL")) { tipo = TipoLocalidade.NACIONAL; }
             else if (tipoAux.equals("ESTADUAL")) { tipo = TipoLocalidade.ESTADUAL; }
