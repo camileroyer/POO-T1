@@ -79,7 +79,8 @@ public class AppACMEPolling{
             int codigoPartido = entrada.nextInt();
             entrada.nextLine();
             String cep = entrada.nextLine();
-            double patrimonio = Double.parseDouble(entrada.nextLine());
+            double patrimonio = entrada.nextDouble();
+            entrada.nextLine();
             Partido partido = cadastroPartido.busca(codigoPartido);
             Localidade localidade = cadastroLocalidade.busca(cep);
 
@@ -124,33 +125,31 @@ public class AppACMEPolling{
 
         // cadastro voto
         while (true) {
-            int id = entrada.nextInt();
-            entrada.nextLine();
-            if (id == -1) { break; }
-            int hora = entrada.nextInt();
-            entrada.nextLine();
-            int numeroCandidato = entrada.nextInt();
-            entrada.nextLine();
-            String cep = entrada.nextLine();
-            Candidato candidato = cadastroCandidato.busca(numeroCandidato);
-            Localidade localidade = cadastroLocalidade.busca(cep);
-
-            if (cadastroVoto.existeId(id)) {
-                System.out.println("5: ERRO - id repetido."); }
-            else if (hora < 8 && hora > 17) {
-                System.out.println("5: ERRO - hora incorreta."); }
-            else if (candidato == null) {
-                System.out.println("5: ERRO - candidato incorreto."); }
-            else if (localidade == null) {
-                System.out.println("5: ERRO - localidade incorreta."); }
-            else if (!candidato.getLocalidade().getCep().equals(localidade.getCep())) {
-                System.out.println("5: ERRO - localidade do candidato incorreta."); }
-            else {
-                Voto voto = new Voto(id, hora, candidato, localidade);
-                cadastroVoto.cadastra(voto);
-                System.out.println("5: " + voto.getDescricao());
-            }
-        }
+        int id = entrada.nextInt();
+        entrada.nextLine();
+        if (id == -1) { break; }
+        int hora = entrada.nextInt();
+        entrada.nextLine();
+        int numeroCandidato = entrada.nextInt();
+        entrada.nextLine();
+        String cep = entrada.nextLine();
+        Candidato candidato = cadastroCandidato.busca(numeroCandidato);
+        Localidade localidade = cadastroLocalidade.busca(cep);
+    if (cadastroVoto.existeId(id)) {
+        System.out.println("5: ERRO - id repetido."); 
+    } else if (hora < 8 || hora > 17) {
+        System.out.println("5: ERRO - hora incorreta."); 
+    } else if (candidato == null) {
+        System.out.println("5: ERRO - candidato incorreto."); 
+    } else if (localidade == null) {
+        System.out.println("5: ERRO - localidade incorreta."); 
+    } else if (!candidato.getLocalidade().getCep().equals(localidade.getCep())) {
+        System.out.println("5: ERRO - localidade do candidato incorreta."); 
+    } else {
+        Voto voto = new Voto(id, hora, candidato, localidade);
+        cadastroVoto.cadastra(voto);
+        System.out.println("5: " + voto.getDescricao());
+    }}
 
         // consulta candidato
         int numero = entrada.nextInt();
@@ -172,38 +171,44 @@ public class AppACMEPolling{
             System.out.println("8: ERRO - localidade inexistente.");
         } else {
             boolean temCandidato = false;
-            for (Presidente p : cadastroCandidato.getPresidentes()){
+            for (Presidente p : cadastroCandidato.getPresidentes()) {
                 if (p.getLocalidade().getCep().equals(cep)) {
-                    temCandidato = true; } }
-            for (Governador g : cadastroCandidato.getGovernadores()){
-             if (g.getLocalidade().getCep().equals(cep)) {
-                temCandidato = true; } }
+                    temCandidato = true;
+                    break;
+                }
+            }
+            for (Governador g : cadastroCandidato.getGovernadores()) {
+                if (g.getLocalidade().getCep().equals(cep)) {
+                    temCandidato = true;
+                    break;
+                } }
+
             Candidato eleito = cadastroCandidato.mostraEleito(cep, cadastroVoto);
-            if (!temCandidato){
-                 System.out.println("8: nenhum candidato cadastrado."); }
-            else if (eleito == null) {
-                System.out.println("8: nenhum candidato eleito."); }
-            else {
-                System.out.println("8: " + eleito.getNumero() + " - " + eleito.getNome() + " - " + cadastroVoto.contaVotos(eleito)); }
-        }
+            if (!temCandidato) {
+                System.out.println("8: nenhum candidato cadastrado.");
+            } else if (eleito == null) {
+                System.out.println("8: nenhum candidato eleito.");
+            } else {
+                System.out.println("8: " + eleito.getNumero() + " - " + eleito.getNome() + " - " + cadastroVoto.contaVotos(eleito));
+            } }
 
         // partido com mais votos
         if (cadastroPartido.getPartidos().isEmpty()) {
             System.out.println("9: ERRO - nenhum partido cadastrado.");
         } else {
             Partido maior = null;
-            int maiorVotos = 0;
+            int maiorVotos = -1;
             for (Partido p : cadastroPartido.getPartidos()) {
                 int votos = cadastroVoto.contaVotos(p);
                 if (votos > maiorVotos) {
                     maiorVotos = votos;
                     maior = p;
                 } }
-            if (maior == null) {
-                System.out.println("9: nenhum partido com votos."); }
-            else {
-                System.out.println("9: " + maior.getDescricao() + " - " + maiorVotos); }
-        }
+            if (maior == null || maiorVotos <= 0) {
+                System.out.println("9: nenhum partido com votos.");
+            } else {
+                System.out.println("9: " + maior.getCodigo() + " - " + maior.getNome() + " - " + maiorVotos);
+            } }
 
         // partido com mais eleitos
         if (cadastroPartido.getPartidos().isEmpty()) {
@@ -216,17 +221,19 @@ public class AppACMEPolling{
                 for (Localidade l : cadastroLocalidade.getLocalidades()) {
                     Candidato eleito = cadastroCandidato.mostraEleito(l.getCep(), cadastroVoto);
                     if (eleito != null && eleito.getPartido().getCodigo() == p.getCodigo()) {
-                        eleitos++; }
+                        eleitos++;
+                    }
                 }
                 if (eleitos > maiorEleitos) {
                     maiorEleitos = eleitos;
                     maior = p;
                 }
             }
-            if (maior == null) {
-                System.out.println("10: nenhum partido com eleitos."); }
-            else { 
-                System.out.println("10: " + maior.getDescricao() + " - " + maiorEleitos); }
+            if (maior == null || maiorEleitos == 0) {
+                System.out.println("10: nenhum partido com eleitos.");
+            } else {
+                System.out.println("10: " + maior.getCodigo() + " - " + maior.getNome() + " - " + maiorEleitos);
+            }
         }
 
         restauraEntrada();

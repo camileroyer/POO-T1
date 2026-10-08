@@ -63,30 +63,36 @@ public class CadastroCandidato{
     public Candidato mostraEleito(String cep, CadastroVotos cadastroVoto) {
         Candidato eleito = null;
         int maiorVotos = 0;
-        int ultimoVoto = 0;
+        int ultimoVoto = Integer.MAX_VALUE; //constante p nao dar falso
 
         for (Presidente p : presidentes) {
             if (p.getLocalidade().getCep().equals(cep)) {
                 int votos = cadastroVoto.contaVotos(p);
                 int ultimo = cadastroVoto.ultimoVoto(p);
-                if (votos > maiorVotos && (votos == maiorVotos && votos > 0 && ultimo < ultimoVoto)) {
+
+                if (votos > maiorVotos) {
                     maiorVotos = votos;
                     ultimoVoto = ultimo;
                     eleito = p;
-                }
-            }
-        }
+                } else if (votos == maiorVotos && votos > 0 && ultimo < ultimoVoto) {
+                    ultimoVoto = ultimo;
+                    eleito = p;
+                } } }
+
         for (Governador g : governadores) {
             if (g.getLocalidade().getCep().equals(cep)) {
                 int votos = cadastroVoto.contaVotos(g);
                 int ultimo = cadastroVoto.ultimoVoto(g);
-                if (votos > maiorVotos && (votos == maiorVotos && votos > 0 && ultimo < ultimoVoto)) {
+
+                if (votos > maiorVotos) {
                     maiorVotos = votos;
                     ultimoVoto = ultimo;
                     eleito = g;
-                }
-            }
-        }
+                } else if (votos == maiorVotos && votos > 0 && ultimo < ultimoVoto) {
+                    ultimoVoto = ultimo;
+                    eleito = g;
+                } } }
+
         return eleito;
     }
 
